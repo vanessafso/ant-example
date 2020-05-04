@@ -2,30 +2,27 @@
 
 <project name="HelloWorld" default="" basedir="."> 
 
-	<property name="name" value="HelloWorld"/> 
-	<property name="src" value="src"/> 
-	<property name="docs" value="docs"/> 
-	<property name="main" value="linhacodigo.ClassMain"/> 
-	<property name="tmp" value="tmp"/> 
-	<property name="bin" value="bin"/> 
-	
-	<target name="compile"> 
-		<mkdir dir="${tmp}"/>
-		<javac srcdir="${src}" destdir="${tmp}" debug="on" deprecation="on"/> 
-		</target> 
-		
-	<target name="jar" depends="compile" description="cria um .jar file "> 
-		<mkdir dir="${bin}"/> 
-		<jar jarfile="${bin}/${name}.jar" basedir="${tmp}"/> 
-	</target> 
-	
-	<target name="javadoc" description="Geração de javadocs"> 
-		<javadoc sourcepath="${src}" destdir="${docs}" packagenames="linhacodigo.*"/> 
-	</target> 
-	
-	<target name="run" depends="compile,jar" description="inicia aplicação"> 
-		<java classname="${main}" classpath="${bin}/${name}.jar"/> 
-	</target> 
-	
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="build/target"/>
+        <jar destfile="build/target/HelloWorld.jar" basedir="build/classes">
+	    <manifest>
+                <attribute name="Main-Class" value="HelloWorld"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="build/target/HelloWorld.jar" fork="true"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
 </project>
 	
